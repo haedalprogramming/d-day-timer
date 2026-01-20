@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타이머 관리</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- 사이드바 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>타이머 관리</h1>
+                <p class="subtitle">운영국 설정 패널</p>
+            </div>
+
+            <div class="sidebar-content">
+                <!-- 현재 타이머 정보 -->
+                <div id="currentTimerInfo" class="current-timer-info hidden">
+                    <h3>현재 활성 타이머</h3>
+                    <p id="currentTimerTitle"></p>
+                    <p id="currentTimerTarget"></p>
+                </div>
+
+                <!-- 타이머 설정 -->
+                <div class="settings-section">
+                    <h2 class="section-title">타이머 설정</h2>
+
+                    <!-- 타이머 타입 선택 -->
+                    <div class="timer-type-selector">
+                        <button id="typeDateTime" class="type-btn active">종료 시각</button>
+                        <button id="typeDuration" class="type-btn">타이머 (분)</button>
+                    </div>
+
+                    <!-- 타이머 폼 -->
+                    <div class="timer-form">
+                        <div class="input-group">
+                            <label for="timerTitle">이벤트명</label>
+                            <input type="text" id="timerTitle" class="input-field" placeholder="예: 아이디어 발표">
+                        </div>
+
+                        <div id="dateTimeGroup" class="input-group">
+                            <label for="targetDateTime">목표 시각</label>
+                            <input type="datetime-local" id="targetDateTime" class="input-field">
+                        </div>
+
+                        <div id="durationGroup" class="input-group hidden">
+                            <label for="durationMinutes">지속 시간 (분)</label>
+                            <input type="number" id="durationMinutes" class="input-field" placeholder="30" min="1">
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="startTimerBtn" class="btn btn-primary">타이머 시작</button>
+                            <button id="stopTimerBtn" class="btn btn-danger" disabled>중지</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 프리셋 -->
+                <div class="settings-section">
+                    <h2 class="section-title">빠른 프리셋</h2>
+                    <div id="presetsGrid" class="presets-grid">
+                        <!-- 프리셋 버튼들이 동적으로 추가됨 -->
+                    </div>
+
+                    <!-- 프리셋 추가 -->
+                    <div class="add-preset-form">
+                        <div class="form-row">
+                            <input type="text" id="presetTitle" class="input-field" placeholder="프리셋 이름">
+                            <input type="number" id="presetDuration" class="input-field small" placeholder="분" min="1">
+                        </div>
+                        <button id="addPresetBtn" class="btn btn-secondary btn-sm" style="width: 100%;">프리셋 추가</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 메인 콘텐츠 -->
+        <main class="main-content">
+            <header class="main-header">
+                <h2>실시간 미리보기</h2>
+                <div class="connection-badge">
+                    <span id="statusDot" class="status-dot loading"></span>
+                    <span id="statusText">연결 중...</span>
+                </div>
+            </header>
+
+            <div class="main-body">
+                <!-- 미리보기 -->
+                <div class="preview-container">
+                    <div id="previewStatus" class="preview-status"></div>
+
+                    <h3 id="previewTitle" class="preview-title"></h3>
+
+                    <div id="previewTimerDisplay" class="preview-timer hidden">
+                        <span id="previewHours">00</span>
+                        <span class="separator">:</span>
+                        <span id="previewMinutes">00</span>
+                        <span class="separator">:</span>
+                        <span id="previewSeconds">00</span>
+                    </div>
+
+                    <p id="previewInactive" class="preview-inactive">
+                        타이머가 비활성 상태입니다
+                    </p>
+                </div>
+
+                <!-- 디스플레이 열기 버튼 -->
+                <div class="text-center mt-2">
+                    <button id="openDisplayBtn" class="btn btn-success btn-lg">
+                        디스플레이 열기
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 스크립트 -->
+    <script src="js/google-sheets-config.js"></script>
+    <script src="js/timer-core.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

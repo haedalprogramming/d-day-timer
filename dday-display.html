@@ -3,229 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D-Day 카운트다운</title>
+    <title>D-Day 디스플레이 - 리다이렉트</title>
+    <meta http-equiv="refresh" content="0; url=display.html">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #f8f9fa;
-            min-height: 100vh;
+            background: #121212;
+            color: #ffffff;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #2c3e50;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .redirect-message {
             text-align: center;
         }
-
-        .event-title {
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 2rem;
-            color: #34495e;
-        }
-
-        .countdown-container {
-            margin: 2rem 0;
-        }
-
-        .time-display {
-            font-size: 8rem;
-            font-weight: 700;
-            color: #e74c3c;
-            margin: 1rem 0;
-            line-height: 1;
-        }
-
-        .time-label {
-            font-size: 2rem;
-            font-weight: 300;
-            color: #7f8c8d;
-            margin-bottom: 3rem;
-        }
-
-        .message {
-            font-size: 1.5rem;
-            margin: 2rem 0;
-            padding: 1rem;
-            color: #27ae60;
-            display: none;
-        }
-
-        .celebration {
-            color: #e74c3c;
-            font-size: 3rem;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .controls {
-            margin-top: 3rem;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            margin: 0 0.5rem;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background: #2980b9;
-        }
-
-        .btn-secondary {
-            background: #95a5a6;
-        }
-
-        .btn-secondary:hover {
-            background: #7f8c8d;
-        }
-
-        .error {
-            color: #e74c3c;
-            font-size: 1.2rem;
-            margin: 2rem 0;
-        }
-
-        @media (max-width: 768px) {
-            .event-title {
-                font-size: 2rem;
-            }
-
-            .time-display {
-                font-size: 5rem;
-            }
-
-            .time-label {
-                font-size: 1.5rem;
-            }
-
-            .btn {
-                padding: 0.6rem 1.5rem;
-                font-size: 0.9rem;
-                margin: 0.5rem;
-                display: block;
-                width: 200px;
-                margin-left: auto;
-                margin-right: auto;
-            }
+        a {
+            color: #00d4ff;
         }
     </style>
 </head>
 <body>
-    <div id="content">
-        <div class="event-title" id="eventTitle">D-Day 설정이 필요합니다</div>
-
-        <div class="countdown-container">
-            <div class="time-display" id="timeDisplay">0</div>
-            <div class="time-label" id="timeLabel">분 남음</div>
-        </div>
-
-        <div class="message" id="message"></div>
-
-        <div class="controls">
-            <a href="dday-setup.html" class="btn">설정 변경</a>
-            <button onclick="resetDday()" class="btn btn-secondary">초기화</button>
-        </div>
+    <div class="redirect-message">
+        <p>새로운 디스플레이 페이지로 이동합니다...</p>
+        <p>자동으로 이동하지 않으면 <a href="display.html">여기를 클릭</a>하세요.</p>
     </div>
-
-    <div id="errorContent" style="display: none;">
-        <div class="error">D-Day 설정이 없거나 잘못되었습니다.</div>
-        <div class="controls">
-            <a href="dday-setup.html" class="btn">D-Day 설정하기</a>
-        </div>
-    </div>
-
     <script>
-        let countdownInterval;
-        let targetDateTime;
-
-        function updateCountdown() {
-            const now = Date.now();
-            const timeLeft = targetDateTime - now;
-
-            if (timeLeft <= 0) {
-                // D-Day 도달
-                clearInterval(countdownInterval);
-
-                document.getElementById('timeDisplay').textContent = '0시간 0분 0초';
-                document.getElementById('timeLabel').textContent = '시간 종료!';
-
-                const message = document.getElementById('message');
-                message.textContent = '🎉 축하합니다! D-Day에 도달했습니다! 🎉';
-                message.className = 'message celebration';
-                message.style.display = 'block';
-
-                return;
-            }
-
-            // 시간, 분, 초 계산
-            const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            document.getElementById('timeDisplay').textContent = `${hours}시간 ${minutes}분 ${seconds}초`;
-            document.getElementById('timeLabel').textContent = '남음';
-
-            // 임박 알림 (1시간 미만)
-            if (hours === 0 && minutes < 60) {
-                const message = document.getElementById('message');
-                message.textContent = '⚡ D-Day가 임박했습니다!';
-                message.style.display = 'block';
-                message.style.color = '#e74c3c';
-            }
-        }
-
-        function resetDday() {
-            if (confirm('D-Day 설정을 초기화하시겠습니까?')) {
-                localStorage.removeItem('dday-title');
-                localStorage.removeItem('dday-date');
-                location.reload();
-            }
-        }
-
-        function initCountdown() {
-            const savedTitle = localStorage.getItem('dday-title');
-            const savedDate = localStorage.getItem('dday-date');
-
-            if (!savedTitle || !savedDate) {
-                document.getElementById('content').style.display = 'none';
-                document.getElementById('errorContent').style.display = 'block';
-                return;
-            }
-
-            targetDateTime = new Date(savedDate).getTime();
-
-            if (targetDateTime <= Date.now()) {
-                document.getElementById('content').style.display = 'none';
-                document.getElementById('errorContent').style.display = 'block';
-                return;
-            }
-
-            document.getElementById('eventTitle').textContent = `${savedTitle}까지`;
-
-            updateCountdown();
-            countdownInterval = setInterval(updateCountdown, 1000);
-        }
-
-        window.onload = initCountdown;
+        window.location.href = 'display.html';
     </script>
 </body>
 </html>

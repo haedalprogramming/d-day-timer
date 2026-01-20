@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-Day 타이머</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/display.css">
+</head>
+<body>
+    <div id="displayContainer" class="display-container">
+        <!-- 이벤트 제목 -->
+        <h1 id="eventTitle" class="event-title"></h1>
+
+        <!-- 타이머 디스플레이 -->
+        <div id="timerDisplay" class="timer-display hidden">
+            <div class="time-segment">
+                <span id="hours" class="time-value">00</span>
+                <span class="time-label">시간</span>
+            </div>
+            <span class="time-separator">:</span>
+            <div class="time-segment">
+                <span id="minutes" class="time-value">00</span>
+                <span class="time-label">분</span>
+            </div>
+            <span class="time-separator">:</span>
+            <div class="time-segment">
+                <span id="seconds" class="time-value">00</span>
+                <span class="time-label">초</span>
+            </div>
+        </div>
+
+        <!-- 프로그레스 바 -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-info">
+                <span id="progressPercent">0%</span>
+                <span id="progressRemaining"></span>
+            </div>
+        </div>
+
+        <!-- 완료 메시지 -->
+        <div id="completionMessage" class="completion-message hidden">
+            시간이 종료되었습니다!
+        </div>
+
+        <!-- 대기 메시지 -->
+        <div id="waitingMessage" class="waiting-message">
+            <h2>타이머 대기 중...</h2>
+            <p>관리자 페이지에서 타이머를 설정하면 자동으로 표시됩니다.</p>
+        </div>
+    </div>
+
+    <!-- 연결 상태 -->
+    <div id="connectionStatus" class="connection-status">
+        <div class="status-indicator">
+            <span id="statusDot" class="status-dot loading"></span>
+            <span id="statusText">연결 중...</span>
+        </div>
+    </div>
+
+    <!-- 컨트롤 버튼 -->
+    <div class="controls">
+        <button id="fullscreenBtn" class="control-btn" title="전체화면 (F)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+        </button>
+        <button id="adminBtn" class="control-btn" title="관리자 페이지">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- 스크립트 -->
+    <script src="js/google-sheets-config.js"></script>
+    <script src="js/timer-core.js"></script>
+    <script src="js/display.js"></script>
+</body>
+</html>
