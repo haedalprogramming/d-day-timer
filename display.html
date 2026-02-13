@@ -6,8 +6,11 @@
     <title>D-Day 타이머</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/display.css">
+    <script src="js/auth-config.js"></script>
+    <script src="js/auth.js"></script>
 </head>
 <body>
+    <script>Auth.requireAuth();</script>
     <div id="displayContainer" class="display-container">
         <!-- 이벤트 제목 -->
         <h1 id="eventTitle" class="event-title"></h1>

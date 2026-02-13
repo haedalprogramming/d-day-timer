@@ -1,0 +1,5 @@
+# Build-generated auth config
+js/auth-config.js
+
+# OS files
+.DS_Store

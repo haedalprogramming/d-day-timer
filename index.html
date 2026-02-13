@@ -111,6 +111,51 @@
             font-size: 0.8rem;
         }
 
+        /* 로그인 폼 */
+        .login-container {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-2xl);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .login-card .logo {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .login-card .landing-title {
+            font-size: 1.75rem;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .login-card .input-group {
+            text-align: left;
+        }
+
+        .login-error {
+            color: var(--accent-danger);
+            font-size: 0.875rem;
+            margin-bottom: var(--spacing-md);
+            display: none;
+        }
+
+        .login-error.visible {
+            display: block;
+        }
+
+        .login-btn {
+            width: 100%;
+            margin-top: var(--spacing-sm);
+        }
+
         @media (max-width: 480px) {
             .landing-title {
                 font-size: 2rem;
@@ -124,11 +169,37 @@
             .btn-large {
                 width: 100%;
             }
+
+            .login-card .landing-title {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="landing-container">
+    <!-- 로그인 폼 -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-card">
+            <div class="logo">&#x23F1;</div>
+            <h1 class="landing-title">D-Day 타이머</h1>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">아이디</label>
+                    <input type="text" id="username" class="input-field" placeholder="아이디를 입력하세요" autocomplete="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" class="input-field" placeholder="비밀번호를 입력하세요" autocomplete="current-password" required>
+                </div>
+                <p id="loginError" class="login-error">아이디 또는 비밀번호가 올바르지 않습니다.</p>
+                <button type="submit" class="btn btn-primary login-btn">로그인</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 랜딩 콘텐츠 -->
+    <div id="landingContainer" class="landing-container hidden">
         <div class="logo">&#x23F1;</div>
         <h1 class="landing-title">D-Day 타이머</h1>
         <p class="landing-subtitle">
@@ -181,5 +252,37 @@
             </p>
         </div>
     </div>
+
+    <script src="js/auth-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        (function() {
+            const loginContainer = document.getElementById('loginContainer');
+            const landingContainer = document.getElementById('landingContainer');
+            const loginForm = document.getElementById('loginForm');
+            const loginError = document.getElementById('loginError');
+
+            if (Auth.isAuthenticated()) {
+                loginContainer.classList.add('hidden');
+                landingContainer.classList.remove('hidden');
+                return;
+            }
+
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                const success = await Auth.login(username, password);
+                if (success) {
+                    loginError.classList.remove('visible');
+                    loginContainer.classList.add('hidden');
+                    landingContainer.classList.remove('hidden');
+                } else {
+                    loginError.classList.add('visible');
+                }
+            });
+        })();
+    </script>
 </body>
 </html>

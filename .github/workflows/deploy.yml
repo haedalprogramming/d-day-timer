@@ -28,6 +28,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      - name: Generate auth config
+        env:
+          LOGIN_USERNAME: ${{ secrets.LOGIN_USERNAME }}
+          LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
+        run: |
+          USERNAME_HASH=$(echo -n "$LOGIN_USERNAME" | sha256sum | awk '{print $1}')
+          PASSWORD_HASH=$(echo -n "$LOGIN_PASSWORD" | sha256sum | awk '{print $1}')
+          printf "const AUTH_CONFIG = {\n  usernameHash: '%s',\n  passwordHash: '%s'\n};\n" "$USERNAME_HASH" "$PASSWORD_HASH" > js/auth-config.js
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
