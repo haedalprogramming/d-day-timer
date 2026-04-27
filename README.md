@@ -93,6 +93,7 @@ d-day-timer/
 │   ├── google-sheets-config.js  # Google Sheets 설정
 │   ├── timer-core.js            # 타이머 유틸리티
 │   ├── display.js               # 디스플레이 로직
+│   ├── auth.js               # 로그인 로직
 │   └── admin.js                 # 관리자 로직
 ├── google-apps-script.js   # Apps Script 코드 (복사용)
 ├── dday-setup.html         # (구버전 호환) 리다이렉트
